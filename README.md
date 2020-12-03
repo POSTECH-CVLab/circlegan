@@ -29,11 +29,11 @@ python circlegan_cond.py --sDataSet [cifar10/cifar100/tinyimagenet]
 
 If you use this code or ideas for your research, please cite our paper.
 
-'''bib
+```bib
 @article{shim2020CircleGAN,
   title   = {{CircleGAN: Generative Adversarial Learning across Spherical Circles}},
   author  = {Woohyeon Shim and Minsu Cho},
   journal = {Conference on Neural Information Processing Systems (NeurIPS)},
   year    = {2020}
 }
-'''
+```
