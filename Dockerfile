@@ -1,15 +1,17 @@
 FROM  tensorflow/tensorflow:1.5.0-devel-gpu
 
+RUN add-apt-repository ppa:deadsnakes/ppa
+
 RUN apt update
 RUN apt install --yes software-properties-common
-RUN apt install --yes python3-pip sudo git locales wget libssl-dev openssl vim
+RUN apt install --yes python3.6 python3-pip sudo git locales wget libssl-dev openssl vim
 RUN locale-gen "en_US.UTF-8"
 RUN update-locale LC_ALL="en_US.UTF-8"
 
-RUN pip3 install --upgrade pip
-RUN pip3 install --upgrade setuptools
-RUN pip3 install tensorflow-gpu==1.5.0 Pillow scipy==1.1.0 scikit-learn matplotlib==2.1.2 tqdm
-RUN ln -sf /usr/bin/python3 /usr/bin/python && \
+RUN python3.6 -m pip install --upgrade pip
+RUN python3.6 -m pip install --upgrade setuptools
+RUN python3.6 -m pip install tensorflow-gpu==1.5.0 Pillow scipy==1.1.0 scikit-learn matplotlib==2.1.2 tqdm
+RUN ln -sf /usr/bin/python3.6 /usr/bin/python && \
     ln -sf /usr/bin/pip3 /usr/bin/pip
 
 ENV USER docker
