@@ -100,11 +100,11 @@ def get_score(samples):
 
     if ref_icp_activations is None:
         logger.log('Evaluating Reference Statistic: icp_model')
-        ref_icp_preds, ref_icp_activations = icp_model.get_preds(dataX.transpose(0, 2, 3, 1))
+        ref_icp_preds, ref_icp_activations = icp_model.get_preds(dataX)
         logger.log('\nref_icp_score: %.3f\n' % InceptionScore.inception_score_H(ref_icp_preds)[0])
 
     logger.log('Evaluating Generator Statistic')
-    icp_preds, icp_activcations = icp_model.get_preds(samples.transpose(0, 2, 3, 1))
+    icp_preds, icp_activcations = icp_model.get_preds(samples)
 
     icp_score = InceptionScore.inception_score_KL(icp_preds)
     fid = FID.get_FID_with_activations(icp_activcations, ref_icp_activations)
@@ -117,11 +117,11 @@ def get_nn(samples):
 
     if ref_icp_activations is None:
         logger.log('Evaluating Reference Statistic: icp_model')
-        ref_icp_preds, ref_icp_activations = icp_model.get_preds(dataX.transpose(0, 2, 3, 1))
+        ref_icp_preds, ref_icp_activations = icp_model.get_preds(dataX)
         logger.log('\nref_icp_score: %.3f\n' % InceptionScore.inception_score_H(ref_icp_preds)[0])
 
     logger.log('Evaluating Generator Statistic')
-    icp_preds, icp_activations = icp_model.get_preds(samples.transpose(0, 2, 3, 1))
+    icp_preds, icp_activations = icp_model.get_preds(samples)
     distance = cdist(icp_activations, ref_icp_activations, 'euclidean')
     nn = np.argmin(distance, axis=1)
     nn_target = np.take(dataX, nn, axis=0)
@@ -465,7 +465,7 @@ while iter <= cfg.iMaxIter:
 
     if time.time() - last_plot_time > 60 * 10 or iter == cfg.iMaxIter:
         _fixed_noise_gen = sess.run(fixed_noise_gen)
-        save_images(_fixed_noise_gen.transpose(0, 2, 3, 1), [10, 10],
+        save_images(_fixed_noise_gen, [10, 10],
                     '{}/train_{:02d}_{:04d}.png'.format(sSampleDir, iter // 10000, iter % 10000))
 
         last_plot_time = time.time()
